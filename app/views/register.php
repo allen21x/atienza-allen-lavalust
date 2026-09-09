@@ -1,32 +1,426 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Register</title>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Create Account | ProductFlow</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #6c63ff, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Background Circles */
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .circle-one {
+            width: 350px;
+            height: 350px;
+            top: -120px;
+            left: -100px;
+        }
+
+        .circle-two {
+            width: 450px;
+            height: 450px;
+            bottom: -200px;
+            right: -150px;
+        }
+
+        /* MAIN WRAPPER */
+
+        .register-wrapper {
+            width: 100%;
+            max-width: 1000px;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* CARD */
+
+        .register-card {
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.20);
+        }
+
+        /* LEFT SIDE */
+
+        .register-left {
+            background: linear-gradient(135deg, #5b52e8, #7c3aed);
+            color: white;
+            padding: 60px;
+            min-height: 550px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .logo-box {
+            width: 65px;
+            height: 65px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 30px;
+            margin-bottom: 25px;
+        }
+
+        .welcome-title {
+            font-weight: 800;
+            font-size: 38px;
+            line-height: 1.2;
+        }
+
+        .welcome-text {
+            opacity: 0.85;
+            margin-top: 15px;
+            line-height: 1.7;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 18px;
+            font-size: 14px;
+        }
+
+        .feature i {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 8px;
+            border-radius: 10px;
+        }
+
+        /* RIGHT SIDE */
+
+        .register-right {
+            padding: 55px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .register-title {
+            font-size: 30px;
+            font-weight: 800;
+            color: #1f2937;
+        }
+
+        .register-subtitle {
+            color: #6b7280;
+            margin-bottom: 30px;
+        }
+
+        /* FORM */
+
+        .form-label {
+            font-weight: 600;
+            font-size: 14px;
+            color: #374151;
+        }
+
+        .input-group-custom {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            z-index: 5;
+        }
+
+        .form-control {
+            padding: 14px 15px 14px 45px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .form-control:focus {
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 4px rgba(124, 58, 237, .12);
+        }
+
+        /* REGISTER BUTTON */
+
+        .register-btn {
+            width: 100%;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+
+            background: linear-gradient(135deg, #6c63ff, #8b5cf6);
+            color: white;
+
+            font-weight: 600;
+            transition: .25s;
+        }
+
+        .register-btn:hover {
+            transform: translateY(-2px);
+            color: white;
+            box-shadow: 0 10px 25px rgba(108, 99, 255, .35);
+        }
+
+        /* LOGIN LINK */
+
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .login-link a {
+            color: #7c3aed;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        /* MOBILE */
+
+        @media(max-width: 768px) {
+
+            body {
+                overflow: auto;
+            }
+
+            .register-left {
+                display: none;
+            }
+
+            .register-right {
+                padding: 40px 30px;
+            }
+
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
-    <h1>Register</h1>
 
-    <form action="/register/store" method="POST">
+<!-- BACKGROUND -->
 
-        <label>Username:</label><br>
-        <input type="text" name="username" required>
+<div class="circle circle-one"></div>
+<div class="circle circle-two"></div>
 
-        <br><br>
 
-        <label>Password:</label><br>
-        <input type="password" name="password" required>
+<!-- MAIN -->
 
-        <br><br>
+<div class="register-wrapper">
 
-        <button type="submit">Register</button>
+    <div class="register-card">
 
-    </form>
+        <div class="row g-0">
 
-    <br>
 
-    <a href="/login">Already have an account? Login</a>
+            <!-- LEFT SIDE -->
+
+            <div class="col-md-6 register-left">
+
+                <div class="logo-box">
+                    <i class="bi bi-box-seam-fill"></i>
+                </div>
+
+
+                <h1 class="welcome-title">
+                    Join<br>
+                    ProductFlow 🚀
+                </h1>
+
+
+                <p class="welcome-text">
+                    Create your account and start managing your products
+                    in one simple and powerful platform.
+                </p>
+
+
+                <div class="feature">
+
+                    <i class="bi bi-boxes"></i>
+
+                    Manage your products easily
+
+                </div>
+
+
+                <div class="feature">
+
+                    <i class="bi bi-shield-lock"></i>
+
+                    Secure authentication system
+
+                </div>
+
+
+                <div class="feature">
+
+                    <i class="bi bi-speedometer2"></i>
+
+                    Modern product dashboard
+
+                </div>
+
+            </div>
+
+
+
+            <!-- RIGHT SIDE -->
+
+            <div class="col-md-6 register-right">
+
+
+                <h2 class="register-title">
+                    Create Account ✨
+                </h2>
+
+
+                <p class="register-subtitle">
+                    Create your ProductFlow account to get started.
+                </p>
+
+
+
+                <!-- REGISTER FORM -->
+
+                <form action="/register/store" method="POST">
+
+
+                    <!-- USERNAME -->
+
+                    <div class="mb-3">
+
+                        <label class="form-label">
+                            Username
+                        </label>
+
+
+                        <div class="input-group-custom">
+
+                            <i class="bi bi-person input-icon"></i>
+
+
+                            <input
+                                type="text"
+                                name="username"
+                                class="form-control"
+                                placeholder="Choose a username"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="mb-4">
+
+                        <label class="form-label">
+                            Password
+                        </label>
+
+
+                        <div class="input-group-custom">
+
+                            <i class="bi bi-lock input-icon"></i>
+
+
+                            <input
+                                type="password"
+                                name="password"
+                                class="form-control"
+                                placeholder="Create a password"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- REGISTER BUTTON -->
+
+                    <button type="submit" class="register-btn">
+
+                        <i class="bi bi-person-plus-fill"></i>
+
+                        Create Account
+
+                    </button>
+
+
+                </form>
+
+
+
+                <!-- LOGIN LINK -->
+
+                <div class="login-link">
+
+                    Already have an account?
+
+                    <a href="/login">
+                        Login here
+                    </a>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
 
 </body>
 </html>

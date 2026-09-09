@@ -34,7 +34,11 @@ class AuthController extends Controller
             exit;
         }
 
-        echo "Invalid username or password!";
+        // Wrong username or password
+        $_SESSION['error'] = "Invalid username or password!";
+
+        header('Location: /login');
+        exit;
     }
 
     // Logout
