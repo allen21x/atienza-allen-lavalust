@@ -10,7 +10,7 @@ $router->get('/', 'Welcome::index');
 
 $router->get('/users', 'UsersController::index');
 
-$router->get('/students', 'StudentController::index');
+$router->get('/student', 'StudentController::index');
 
 $router->get('/student/profile', 'StudentController::profile')->middleware('StudentMiddleware');
 
@@ -37,7 +37,7 @@ $router->get('/products/delete/{id}', 'ProductController::delete')
        ->middleware('AuthMiddleware');
 
 
-//para sa auth
+//para sa authlogin
 $router->get('/login', 'AuthController::login');
 
 $router->post('/login/authenticate', 'AuthController::authenticate');
