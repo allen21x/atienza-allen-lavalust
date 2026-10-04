@@ -25,8 +25,10 @@ class Api
     protected $refresh_token_table;
     protected $users_table = 'users';
     protected $verify_user = true;
+
     protected $payload_token_expiration = 900;
     protected $refresh_token_expiration = 604800;
+
     protected $allow_origin;
 
     private $jwt_secret;
@@ -60,15 +62,20 @@ class Api
             (bool) (config_item('jwt_verify_user') ?? $this->verify_user);
 
         $this->payload_token_expiration =
-            (int) (config_item('payload_token_expiration') ??
-            $this->payload_token_expiration);
+            (int) (
+                config_item('payload_token_expiration')
+                ?? $this->payload_token_expiration
+            );
 
         $this->refresh_token_expiration =
-            (int) (config_item('refresh_token_expiration') ??
-            $this->refresh_token_expiration);
+            (int) (
+                config_item('refresh_token_expiration')
+                ?? $this->refresh_token_expiration
+            );
 
         $this->jwt_secret = config_item('jwt_secret');
         $this->refresh_token_key = config_item('refresh_token_key');
+
         $this->allow_origin = config_item('allow_origin');
 
         $this->jwt_issuer =
@@ -81,33 +88,16 @@ class Api
             (bool) (config_item('rate_limit_enabled') ?? true);
 
         $this->rate_limit_requests =
-            (int) (config_item('rate_limit_requests') ??
-            $this->rate_limit_requests);
+            (int) (
+                config_item('rate_limit_requests')
+                ?? $this->rate_limit_requests
+            );
 
         $this->rate_limit_seconds =
-            (int) (config_item('rate_limit_seconds') ??
-            $this->rate_limit_seconds);
-
-        $this->assert_secret_is_safe(
-            $this->jwt_secret,
-            'jwt_secret'
-        );
-
-        $this->assert_secret_is_safe(
-            $this->refresh_token_key,
-            'refresh_token_key'
-        );
-
-        if (
-            hash_equals(
-                (string) $this->jwt_secret,
-                (string) $this->refresh_token_key
-            )
-        ) {
-            show_error(
-                'jwt_secret and refresh_token_key must be different values.'
+            (int) (
+                config_item('rate_limit_seconds')
+                ?? $this->rate_limit_seconds
             );
-        }
 
         /*
         |--------------------------------------------------------------------------
@@ -116,11 +106,11 @@ class Api
         */
 
         $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+        $allowed_origin = 'https://atienza-allen-react.onrender.com';
 
-        if ($origin === 'https://atienza-allen-react.onrender.com') {
-
+        if ($origin === $allowed_origin) {
             header(
-                'Access-Control-Allow-Origin: https://atienza-allen-react.onrender.com'
+                'Access-Control-Allow-Origin: ' . $allowed_origin
             );
 
             header(
@@ -149,6 +139,33 @@ class Api
         if (($_SERVER['REQUEST_METHOD'] ?? '') === 'OPTIONS') {
             http_response_code(204);
             exit;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Validate JWT secrets
+        |--------------------------------------------------------------------------
+        */
+
+        $this->assert_secret_is_safe(
+            $this->jwt_secret,
+            'jwt_secret'
+        );
+
+        $this->assert_secret_is_safe(
+            $this->refresh_token_key,
+            'refresh_token_key'
+        );
+
+        if (
+            hash_equals(
+                (string) $this->jwt_secret,
+                (string) $this->refresh_token_key
+            )
+        ) {
+            show_error(
+                'jwt_secret and refresh_token_key must be different values.'
+            );
         }
     }
 
@@ -238,7 +255,7 @@ class Api
             strtoupper($method)
         ) {
             $this->respond_error(
-                "Method Not Allowed",
+                'Method Not Allowed',
                 405
             );
         }
@@ -312,7 +329,6 @@ class Api
 
             $remaining = $requests - 1;
         } else {
-
             if ($current >= $requests) {
                 $reset_time =
                     $window_start + $seconds;
@@ -380,7 +396,9 @@ class Api
     {
         http_response_code($code);
 
-        header('Content-Type: application/json');
+        header(
+            'Content-Type: application/json'
+        );
 
         echo json_encode(
             $data,
@@ -453,13 +471,19 @@ class Api
         $payload = array_merge(
             [
                 'iat' => $now,
+
                 'exp' =>
                     $now +
                     $this->payload_token_expiration,
+
                 'iss' => $this->jwt_issuer,
+
                 'aud' => $this->jwt_audience,
+
                 'jti' =>
-                    bin2hex(random_bytes(16))
+                    bin2hex(
+                        random_bytes(16)
+                    )
             ],
             $payload
         );
@@ -567,6 +591,7 @@ class Api
         if (
             ($payload['iss'] ?? '') !==
             $this->jwt_issuer ||
+
             ($payload['aud'] ?? '') !==
             $this->jwt_audience
         ) {
@@ -648,7 +673,6 @@ class Api
         }
 
         if ($this->verify_user) {
-
             $stmt =
                 $this->_lava->db->raw(
                     "SELECT id, role
@@ -695,16 +719,21 @@ class Api
 
         $access_payload = [
             'sub' => $user_id,
+
             'type' => 'access',
+
             'role' =>
                 $user_data['role'] ??
                 'user',
+
             'scopes' => $scopes,
         ];
 
         $refresh_payload = [
             'sub' => $user_id,
+
             'type' => 'refresh',
+
             'jti' =>
                 bin2hex(
                     random_bytes(16)
