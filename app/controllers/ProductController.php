@@ -1,3 +1,4 @@
+
 <?php
 
 defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
@@ -14,7 +15,7 @@ class ProductController extends Controller
     // READ
     public function index()
     {
-        $data['products'] = $this->ProductModel->all();
+        $data['products'] = $this->ProductModel->get_all();
 
         $this->call->view('products', $data);
     }
@@ -35,7 +36,7 @@ class ProductController extends Controller
             'quantity'     => $_POST['quantity']
         ];
 
-        $this->ProductModel->insert($data);
+        $this->ProductModel->create($data);
 
         header('Location: /products');
         exit;
@@ -44,7 +45,7 @@ class ProductController extends Controller
     // EDIT PAGE
     public function edit($id)
     {
-        $data['product'] = $this->ProductModel->find($id);
+        $data['product'] = $this->ProductModel->get_by_id($id);
 
         $this->call->view('product_edit', $data);
     }
@@ -65,11 +66,13 @@ class ProductController extends Controller
         exit;
     }
 
+    // DELETE PRODUCT
     public function delete($id)
-{
-    $this->ProductModel->delete($id);
+    {
+        $this->ProductModel->delete($id);
 
-    header('Location: /products');
-    exit;
+        header('Location: /products');
+        exit;
+    }
 }
-}
+
