@@ -1,4 +1,3 @@
-
 public function index()
 {
     $this->api->respond([
