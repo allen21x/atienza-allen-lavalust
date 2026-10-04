@@ -97,33 +97,6 @@ $router->get(
 
 
 // =========================
-// API CORS PREFLIGHT
-// =========================
-// These routes handle browser OPTIONS requests
-// before POST / PUT / DELETE requests.
-
-$router->options(
-    '/api/login',
-    'AuthApiController::login'
-);
-
-$router->options(
-    '/api/logout',
-    'AuthApiController::logout'
-);
-
-$router->options(
-    '/api/products',
-    'ProductApiController::index'
-);
-
-$router->options(
-    '/api/products/{id}',
-    'ProductApiController::show'
-);
-
-
-// =========================
 // PRODUCT API ROUTES
 // =========================
 
