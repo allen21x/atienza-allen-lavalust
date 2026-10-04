@@ -1,5 +1,6 @@
 <?php
 defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
+
 /**
  * ------------------------------------------------------------------
  * LavaLust - an opensource lightweight PHP MVC Framework
@@ -36,34 +37,27 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
 /*
 |--------------------------------------------------------------------------
-| Enable/Disable Migrations
+| Enable/Disable API Helper
 |--------------------------------------------------------------------------
 |
-| Migrations are disabled by default for security reasons.
-| You should enable migrations whenever you intend to do a schema migration
-| and disable it back when you're done.
+| The API Helper is disabled by default for security reasons.
+| Before enabling it you MUST set the jwt_secret and refresh_token_key
+| below (see their notes).
 |
 */
-$config['api_helper_enabled'] = FALSE;
+$config['api_helper_enabled'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
 | Payload Token Expiration
 |--------------------------------------------------------------------------
-|
-| Used for Payload Token Expiration
-|
 */
 $config['payload_token_expiration'] = 900;
-
 
 /*
 |--------------------------------------------------------------------------
 | Refresh Token Expiration
 |--------------------------------------------------------------------------
-|
-| Used for Refresh Token Expiration
-|
 */
 $config['refresh_token_expiration'] = 604800;
 
@@ -71,30 +65,34 @@ $config['refresh_token_expiration'] = 604800;
 |--------------------------------------------------------------------------
 | JWT Secret Token
 |--------------------------------------------------------------------------
-|
-| Used for Securing endpoint
-|
 */
-$config['jwt_secret'] = 'cbTsnJDxCodakDxh4M3qd5Sn3Kd2cYCDp4MEu0DAPxx';
+$config['jwt_secret'] = getenv('JWT_SECRET') ?: '';
 
 /*
 |--------------------------------------------------------------------------
 | Refresh Token
 |--------------------------------------------------------------------------
-|
-| Used for Securing endpoint
-|
 */
-$config['refresh_token_key'] = '0bNvxjPFJ6dhi1Ttf7AStp95zUcd1iy94mjblklwfPs';
+$config['refresh_token_key'] = getenv('REFRESH_TOKEN_KEY') ?: '';
+
+/*
+|--------------------------------------------------------------------------
+| Verify User On Each Request
+|--------------------------------------------------------------------------
+*/
+$config['jwt_verify_user'] = TRUE;
+
+/*
+|--------------------------------------------------------------------------
+| Users Table
+|--------------------------------------------------------------------------
+*/
+$config['users_table'] = 'users';
 
 /*
 |--------------------------------------------------------------------------
 | Access-Control-Allow-Origin
 |--------------------------------------------------------------------------
-|
-| Access-Control-Allow-Origin - change this to your domain if
-| already deployed.
-|
 */
 $config['allow_origin'] = '*';
 
@@ -102,37 +100,27 @@ $config['allow_origin'] = '*';
 |--------------------------------------------------------------------------
 | Refresh Token Table
 |--------------------------------------------------------------------------
-|
-| This is the name of the table that will store the Refresh Token.
-|
 */
 $config['refresh_token_table'] = 'refresh_tokens';
 
 /*
 |--------------------------------------------------------------------------
-| JWT Issuer and Audience
+| JWT Issuer
 |--------------------------------------------------------------------------
-| These are used for JWT Issuer and Audience claims.
-|
 */
 $config['jwt_issuer'] = 'your-app';
 
 /*
 |--------------------------------------------------------------------------
-| JWT Issuer and Audience
+| JWT Audience
 |--------------------------------------------------------------------------
-| These are used for JWT Issuer and Audience claims.
-|
 */
-
 $config['jwt_audience'] = 'your-app-clients';
 
 /*
 |--------------------------------------------------------------------------
 | Rate Limiting
 |--------------------------------------------------------------------------
-| These settings are used for API rate limiting.
-|
 */
 $config['rate_limit_enabled'] = true;
 
@@ -140,9 +128,6 @@ $config['rate_limit_enabled'] = true;
 |--------------------------------------------------------------------------
 | Rate Limiting Requests and Seconds
 |--------------------------------------------------------------------------
-| These settings define the number of requests allowed and the time 
-| window in seconds.
-|
 */
 $config['rate_limit_requests'] = 60;
 
@@ -150,7 +135,5 @@ $config['rate_limit_requests'] = 60;
 |--------------------------------------------------------------------------
 | Rate Limiting Seconds
 |--------------------------------------------------------------------------
-| This setting defines the time window in seconds for rate limiting.
-|
 */
 $config['rate_limit_seconds'] = 60;

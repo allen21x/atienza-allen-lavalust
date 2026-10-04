@@ -1,5 +1,7 @@
 <?php
+
 defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
+
 /**
  * ------------------------------------------------------------------
  * LavaLust - an opensource lightweight PHP MVC Framework
@@ -40,18 +42,18 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 |--------------------------------------------------------------------------
 |
 | Migrations are disabled by default for security reasons.
-| You should enable migrations whenever you intend to do a schema migration
-| and disable it back when you're done.
+| Enable migrations when you need to run database migrations.
 |
 */
-$config['migration_enabled'] = FALSE;
+$config['migration_enabled'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
 | Migrations table
 |--------------------------------------------------------------------------
 |
-| This is the name of the table that will store the current migrations state.
+| This is the name of the table that will store the current
+| migrations state.
 |
 */
 $config['migration_table'] = 'migrations';
@@ -62,8 +64,6 @@ $config['migration_table'] = 'migrations';
 |--------------------------------------------------------------------------
 |
 | Path to your migrations folder.
-| Typically, it will be within your application path.
-| Also, writing permission is required within the migrations path.
 |
 */
 $config['migration_path'] = APP_DIR.'migrations/';

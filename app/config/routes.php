@@ -5,19 +5,24 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
 /** @var object $router **/
 
-//una ko na act
+// =========================
+// MAIN ROUTES
+// =========================
+
 $router->get('/', 'Welcome::index');
 
 $router->get('/users', 'UsersController::index');
 
 $router->get('/student', 'StudentController::index');
 
-$router->get('/student/profile', 'StudentController::profile')->middleware('StudentMiddleware');
+$router->get('/student/profile', 'StudentController::profile')
+       ->middleware('StudentMiddleware');
 
 
+// =========================
+// PRODUCT CRUD
+// =========================
 
-
-//ito crud
 $router->get('/products', 'ProductController::index')
        ->middleware('AuthMiddleware');
 
@@ -37,14 +42,65 @@ $router->get('/products/delete/{id}', 'ProductController::delete')
        ->middleware('AuthMiddleware');
 
 
-//para sa authlogin
+// =========================
+// LOGIN / AUTHENTICATION
+// =========================
+
 $router->get('/login', 'AuthController::login');
 
 $router->post('/login/authenticate', 'AuthController::authenticate');
 
 $router->get('/logout', 'AuthController::logout');
 
-//ito sa register
+
+// =========================
+// REGISTER
+// =========================
+
 $router->get('/register', 'AuthController::register');
 
 $router->post('/register/store', 'AuthController::store');
+
+
+// =========================
+// MIGRATION ROUTES
+// =========================
+
+$router->get('/create-migration/{migration_class}', 'MigrationController::create_migration');
+
+$router->get('/migrate', 'MigrationController::migrate');
+
+$router->get('/rollback', 'MigrationController::rollback');
+
+$router->get('/rollback-all', 'MigrationController::rollback_all');
+
+$router->get('/refresh', 'MigrationController::refresh');
+
+$router->get('/status', 'MigrationController::status');
+
+
+// =========================
+// PRODUCT API ROUTES
+// =========================
+
+$router->get('/api/products', 'ProductApiController::index');
+
+$router->get('/api/products/{id}', 'ProductApiController::show');
+
+$router->post('/api/products', 'ProductApiController::store');
+
+$router->put('/api/products/{id}', 'ProductApiController::update');
+
+$router->delete('/api/products/{id}', 'ProductApiController::delete');
+
+
+// =========================
+// AUTHENTICATION API ROUTES
+// =========================
+
+$router->post('/api/login', 'AuthApiController::login');
+
+$router->post('/api/logout', 'AuthApiController::logout');
+
+
+

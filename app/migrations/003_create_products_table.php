@@ -1,6 +1,6 @@
 <?php
 
-class Create_products_table {
+class create_products_table {
 
     private $_lava;
 
