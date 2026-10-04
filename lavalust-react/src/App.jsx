@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 
-const API_URL = "/api/products";
-const LOGIN_URL = "/api/login";
-const LOGOUT_URL = "/api/logout";
+// =========================
+// API URL
+// =========================
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || "";
+
+const API_URL = `${API_BASE_URL}/api/products`;
+const LOGIN_URL = `${API_BASE_URL}/api/login`;
+const LOGOUT_URL = `${API_BASE_URL}/api/logout`;
 
 function App() {
   const [products, setProducts] = useState([]);
