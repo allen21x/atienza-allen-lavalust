@@ -94,7 +94,7 @@ $config['users_table'] = 'users';
 | Access-Control-Allow-Origin
 |--------------------------------------------------------------------------
 */
-$config['allow_origin'] = '*';
+$config['allow_origin'] = 'https://atienza-allen-react.onrender.com';
 
 /*
 |--------------------------------------------------------------------------
