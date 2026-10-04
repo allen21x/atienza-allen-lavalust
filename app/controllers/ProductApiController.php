@@ -1,9 +1,9 @@
-public function index()
+public function __construct()
 {
-    $this->api->respond([
-        'status'  => true,
-        'message' => 'JWT authentication works!',
-        'data'    => []
-    ], 200);
-}
+    parent::__construct();
 
+    $this->call->library('api');
+    $this->call->model('ProductModel');
+
+    $this->api->require_jwt();
+}
