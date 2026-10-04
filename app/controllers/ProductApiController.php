@@ -1,4 +1,3 @@
-
 <?php
 
 defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
@@ -12,11 +11,9 @@ class ProductApiController extends Controller
         $this->call->library('api');
         $this->call->model('ProductModel');
 
-        // Require JWT authentication
         $this->api->require_jwt();
     }
 
-    // GET /api/products
     public function index()
     {
         $products = $this->ProductModel->get_all();
@@ -28,7 +25,6 @@ class ProductApiController extends Controller
         ], 200);
     }
 
-    // GET /api/products/{id}
     public function show($id)
     {
         $product = $this->ProductModel->get_by_id($id);
@@ -48,7 +44,6 @@ class ProductApiController extends Controller
         ], 200);
     }
 
-    // POST /api/products
     public function store()
     {
         $data = $this->api->body();
@@ -86,7 +81,6 @@ class ProductApiController extends Controller
         );
     }
 
-    // PUT /api/products/{id}
     public function update($id)
     {
         $product = $this->ProductModel->get_by_id($id);
@@ -127,7 +121,6 @@ class ProductApiController extends Controller
         );
     }
 
-    // DELETE /api/products/{id}
     public function delete($id)
     {
         $product = $this->ProductModel->get_by_id($id);
