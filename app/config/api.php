@@ -1,79 +1,63 @@
-<?php
-defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
-/**
- * ------------------------------------------------------------------
- * LavaLust - an opensource lightweight PHP MVC Framework
- * ------------------------------------------------------------------
- *
- * MIT License
- *
- * Copyright (c) 2020 Ronald M. Marasigan
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- *
- * @package LavaLust
- * @author Ronald M. Marasigan <ronald.marasigan@yahoo.com>
- * @since Version 4
- * @link https://github.com/ronmarasigan/LavaLust
- * @license https://opensource.org/licenses/MIT MIT License
- */
+<?php
+
+defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
 /*
 |--------------------------------------------------------------------------
-| Enable/Disable API Helper
+| LavaLust API Configuration
 |--------------------------------------------------------------------------
-|
-| The API Helper is disabled by default for security reasons.
-| Before enabling it you MUST set the jwt_secret and refresh_token_key
-| below (see their notes).
-|
+*/
+
+/*
+|--------------------------------------------------------------------------
+| Enable API Helper
+|--------------------------------------------------------------------------
 */
 $config['api_helper_enabled'] = TRUE;
 
+
 /*
 |--------------------------------------------------------------------------
-| Payload Token Expiration
+| Access Token Expiration
+|--------------------------------------------------------------------------
+| 900 seconds = 15 minutes
 |--------------------------------------------------------------------------
 */
 $config['payload_token_expiration'] = 900;
+
 
 /*
 |--------------------------------------------------------------------------
 | Refresh Token Expiration
 |--------------------------------------------------------------------------
+| 604800 seconds = 7 days
+|--------------------------------------------------------------------------
 */
 $config['refresh_token_expiration'] = 604800;
 
+
 /*
 |--------------------------------------------------------------------------
-| JWT Secret Token
+| JWT Secret
+|--------------------------------------------------------------------------
+| IMPORTANT:
+| Set JWT_SECRET in Render Environment Variables.
 |--------------------------------------------------------------------------
 */
 $config['jwt_secret'] = getenv('JWT_SECRET') ?: '';
 
+
 /*
 |--------------------------------------------------------------------------
-| Refresh Token
+| Refresh Token Secret
+|--------------------------------------------------------------------------
+| IMPORTANT:
+| Set REFRESH_TOKEN_KEY in Render Environment Variables.
 |--------------------------------------------------------------------------
 */
 $config['refresh_token_key'] = getenv('REFRESH_TOKEN_KEY') ?: '';
+
 
 /*
 |--------------------------------------------------------------------------
@@ -82,6 +66,7 @@ $config['refresh_token_key'] = getenv('REFRESH_TOKEN_KEY') ?: '';
 */
 $config['jwt_verify_user'] = TRUE;
 
+
 /*
 |--------------------------------------------------------------------------
 | Users Table
@@ -89,12 +74,14 @@ $config['jwt_verify_user'] = TRUE;
 */
 $config['users_table'] = 'users';
 
+
 /*
 |--------------------------------------------------------------------------
-| Access-Control-Allow-Origin
+| React Frontend URL
 |--------------------------------------------------------------------------
 */
 $config['allow_origin'] = 'https://atienza-allen-react.onrender.com';
+
 
 /*
 |--------------------------------------------------------------------------
@@ -103,12 +90,14 @@ $config['allow_origin'] = 'https://atienza-allen-react.onrender.com';
 */
 $config['refresh_token_table'] = 'refresh_tokens';
 
+
 /*
 |--------------------------------------------------------------------------
 | JWT Issuer
 |--------------------------------------------------------------------------
 */
 $config['jwt_issuer'] = 'your-app';
+
 
 /*
 |--------------------------------------------------------------------------
@@ -117,23 +106,27 @@ $config['jwt_issuer'] = 'your-app';
 */
 $config['jwt_audience'] = 'your-app-clients';
 
+
 /*
 |--------------------------------------------------------------------------
 | Rate Limiting
 |--------------------------------------------------------------------------
 */
-$config['rate_limit_enabled'] = true;
+$config['rate_limit_enabled'] = TRUE;
+
 
 /*
 |--------------------------------------------------------------------------
-| Rate Limiting Requests and Seconds
+| Rate Limit Requests
 |--------------------------------------------------------------------------
 */
 $config['rate_limit_requests'] = 60;
 
+
 /*
 |--------------------------------------------------------------------------
-| Rate Limiting Seconds
+| Rate Limit Time
 |--------------------------------------------------------------------------
 */
 $config['rate_limit_seconds'] = 60;
+
