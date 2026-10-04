@@ -1,8 +1,10 @@
 
 <?php
+
 defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
 $config['api_helper_enabled'] = TRUE;
+
 $config['payload_token_expiration'] = 900;
 $config['refresh_token_expiration'] = 604800;
 
